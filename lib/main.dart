@@ -14,9 +14,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DefaultTabController(
+      home: const DefaultTabController(
         length: 3,
-        child:  const MyHomePage(title: "App"),
+        child:  MyHomePage(title: "Traveler Wallet"),
       ),
     );
   }
@@ -32,12 +32,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   int _counter = 0;
-  String _text = "";
+
+  bool _isEntry = false;
 
   void _incrementCounter() {
     setState(() {
       _counter++;
+    });
+  }
+
+  void handleIsEntry(bool inValue) {
+    setState(() {
+      _isEntry = inValue;
     });
   }
 
@@ -46,26 +54,66 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Row(children: [
+          const Icon(Icons.wallet),
+          Text(widget.title),
+        ]),
         bottom: const TabBar(tabs: [
-          Tab(icon: Icon(Icons.directions_bike)),
-          Tab(icon: Icon(Icons.abc_sharp)),
-          Tab(icon: Icon(Icons.arrow_back_ios_new))
+          Tab(icon: Icon(Icons.home)),
+          Tab(icon: Icon(Icons.compare_arrows)),
+          Tab(icon: Icon(Icons.monetization_on))
         ]),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+        child:  Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                validator: (String? inValue ) {
+                  if (inValue != null) {
+                    if (double.parse(inValue) <= 0.0) {
+                      return "Valor inválido!";
+                    }
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  hintText: "00.0",
+                  labelText: "Valor da Operação",
+                ),
+              ),
+              TextFormField(
+                keyboardType: TextInputType.multiline,
+                validator: (String? inValue) {
+                  if (inValue != null) {
+                    if(inValue.length < 3) {
+                      return "Adicione uma descrição mais detalhada!";
+                    }
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  hintText: "Conta de luz",
+                  labelText: "Descrição",
+                ),
+              ),
+              Row(children: [
+                const Text("Entrada"),
+                Switch(value: _isEntry, onChanged: (bool inValue) {
+                  handleIsEntry(inValue);
+                }),
+                const Text("Saída"),
+              ]),
+              ElevatedButton(onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                }
+              }, child: const Text("Salvar"))
+            ],
+          ),
+        )
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
