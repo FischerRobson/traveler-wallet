@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_example/screens/home.dart';
+import 'package:flutter_example/screens/operations.dart';
+import 'package:flutter_example/screens/prices.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,9 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.dark(),
       home: const DefaultTabController(
         length: 3,
         child:  MyHomePage(title: "Traveler Wallet"),
@@ -32,22 +33,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  int _counter = 0;
-
-  bool _isEntry = false;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void handleIsEntry(bool inValue) {
-    setState(() {
-      _isEntry = inValue;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,61 +49,16 @@ class _MyHomePageState extends State<MyHomePage> {
           Tab(icon: Icon(Icons.monetization_on))
         ]),
       ),
-      body: Center(
-        child:  Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                validator: (String? inValue ) {
-                  if (inValue != null) {
-                    if (double.parse(inValue) <= 0.0) {
-                      return "Valor inválido!";
-                    }
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  hintText: "00.0",
-                  labelText: "Valor da Operação",
-                ),
-              ),
-              TextFormField(
-                keyboardType: TextInputType.multiline,
-                validator: (String? inValue) {
-                  if (inValue != null) {
-                    if(inValue.length < 3) {
-                      return "Adicione uma descrição mais detalhada!";
-                    }
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  hintText: "Conta de luz",
-                  labelText: "Descrição",
-                ),
-              ),
-              Row(children: [
-                const Text("Entrada"),
-                Switch(value: _isEntry, onChanged: (bool inValue) {
-                  handleIsEntry(inValue);
-                }),
-                const Text("Saída"),
-              ]),
-              ElevatedButton(onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                }
-              }, child: const Text("Salvar"))
-            ],
-          ),
-        )
-      ),
+      body: TabBarView(children: [
+        HomeScreen(),
+        OperationsScreen(),
+        PricesScreen(),
+      ]),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        onPressed: () {  },
+        hoverColor: Colors.white,
+        backgroundColor: Colors.white10,
+        child: const Icon(Icons.add, color: Colors.lightBlue,),
       ),
     );
   }
