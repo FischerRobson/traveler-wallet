@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Tab(icon: Icon(Icons.monetization_on))
         ]),
       ),
-      body: TabBarView(children: [
+      body: const TabBarView(children: [
         HomeScreen(),
         OperationsScreen(),
         PricesScreen(),
