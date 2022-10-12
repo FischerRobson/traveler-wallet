@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_example/screens/home.dart';
+import 'package:flutter_example/screens/new_operation.dart';
 import 'package:flutter_example/screens/operations.dart';
 import 'package:flutter_example/screens/prices.dart';
 
@@ -33,6 +34,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  bool _isEntry = false;
+
+  void handleIsEntry(bool inValue) {
+    setState(() {
+      _isEntry = inValue;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
         PricesScreen(),
       ]),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {  },
+        onPressed: () { 
+          showModalBottomSheet(context: context, builder: (BuildContext context) {
+            return NewOperation();
+          });
+        },
         hoverColor: Colors.white,
         backgroundColor: Colors.white10,
         child: const Icon(Icons.add, color: Colors.lightBlue,),
