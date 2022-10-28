@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_example/screens/home.dart';
 import 'package:flutter_example/screens/new_operation.dart';
-import 'package:flutter_example/screens/operations.dart';
+import 'package:flutter_example/model/operations.dart';
 import 'package:flutter_example/screens/prices.dart';
 
 void main() {
