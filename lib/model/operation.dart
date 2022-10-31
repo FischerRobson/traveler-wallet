@@ -6,6 +6,31 @@ class Operation {
   late String _date;
   late double _amount;
 
+  String get description => _description;
+  bool get isEntry => _isEntry;
+  String get date => _date;
+  double get amount => _amount;
+
+  set description(String description) {
+    if(description.isNotEmpty) {
+      _description = description;
+    }
+  }
+
+  set date(String date) {
+    if(date.isNotEmpty) {
+      _date = date;
+    }
+  }
+
+  set amount(double amount) {
+    _amount = amount;
+  }
+
+  set isEntry(bool isEntry) {
+    _isEntry = isEntry;
+  }
+
   var now = DateTime.now();
   var formatter = new DateFormat('yyyy-MM-dd');
 
