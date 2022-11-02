@@ -1,12 +1,12 @@
 import './operation.dart';
 
-class OperationsColletion {
+class OperationsCollection {
   List<String> idList = [];
-  List<Operation> operarationsList = [];
+  List<Operation> operationsList = [];
 
-  OperationsColletion() {
+  OperationsCollection() {
     idList = [];
-    operarationsList = [];
+    operationsList = [];
   }
 
   int length() {
@@ -14,13 +14,55 @@ class OperationsColletion {
   }
 
   Operation getOperationAtIndex(int index) {
-    Operation operation = operarationsList[index];
+    Operation operation = operationsList[index];
     return Operation.withData(
       amount: operation.amount,
       date: operation.date,
       description: operation.description,
       isEntry: operation.isEntry
     );
+  }
+
+  updateOrInsertOperationOfId(String id, Operation operation) {
+    int index = getIndexOfId(id);
+    if (index != -1) {
+      operationsList[index] =
+          Operation.withData(
+              amount: operation.amount,
+              date: operation.date,
+              description: operation.description,
+              isEntry: operation.isEntry
+          );
+    } else {
+      idList.add(id);
+      operationsList.add(
+        Operation.withData(
+            amount: operation.amount,
+            date: operation.date,
+            description: operation.description,
+            isEntry: operation.isEntry),
+        );
+    }
+  }
+
+  updateOperationOfId(String id, Operation operation) {
+    int index = getIndexOfId(id);
+    if (index != -1) {
+      operationsList[index] =
+          Operation.withData(
+              amount: operation.amount,
+              date: operation.date,
+              description: operation.description,
+              isEntry: operation.isEntry);
+    }
+  }
+
+  deleteOperationOfId(String id) {
+    int index = getIndexOfId(id);
+    if (index != -1) {
+      operationsList.removeAt(index);
+      idList.removeAt(index);
+    }
   }
 
   String getIdAtIndex(int index) {
@@ -39,7 +81,7 @@ class OperationsColletion {
 
   insertOperationOfId(String id, Operation operation) {
     idList.add(id);
-    operarationsList.add(
+    operationsList.add(
         Operation.withData(
             amount: operation.amount,
             date: operation.date,

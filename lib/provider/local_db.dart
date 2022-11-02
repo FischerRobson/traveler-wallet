@@ -50,24 +50,24 @@ class LocalDatabase {
     return result;
   }
 
-  Future<OperationsColletion> getOperationList() async {
+  Future<OperationsCollection> getOperationList() async {
     Database db = await database;
     List<Map<String, Object?>> operationMapList =
     await db.rawQuery("SELECT * FROM $operationTable;");
-    OperationsColletion operationsColletion = OperationsColletion();
+    OperationsCollection operationsCollection = OperationsCollection();
 
     for (int i = 0; i < operationMapList.length; i++) {
       Operation operation = Operation.fromMap(operationMapList[i]);
 
-      operationsColletion.insertOperationOfId(operationMapList[i][colId].toString(), operation);
+      operationsCollection.insertOperationOfId(operationMapList[i][colId].toString(), operation);
     }
-    return operationsColletion;
+    return operationsCollection;
   }
 
   // Stream
 
-  notify(String operationId, Operation? oepration) async {
-    _controller?.sink.add([operationId, oepration]);
+  notify(String operationId, Operation? operation) async {
+    _controller?.sink.add([operationId, operation]);
   }
 
   Stream get stream {

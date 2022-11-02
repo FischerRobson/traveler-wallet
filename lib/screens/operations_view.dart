@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_example/components/operation_container.dart';
 
-class OperationsScreen extends StatefulWidget {
-  const OperationsScreen({super.key});
+class OperationsView extends StatefulWidget {
+  const OperationsView({super.key});
 
   @override
-  State<OperationsScreen> createState() => _OperationsScreenState();
+  State<OperationsView> createState() => _OperationsViewState();
 }
 
-class _OperationsScreenState extends State<OperationsScreen> {
+class _OperationsViewState extends State<OperationsView> {
 
   @override
   Widget build(BuildContext context) {

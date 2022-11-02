@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_example/screens/home.dart';
 import 'package:flutter_example/screens/new_operation.dart';
-import 'package:flutter_example/model/operations_mock.dart';
+import 'package:flutter_example/screens/operations_view.dart';
 import 'package:flutter_example/screens/prices.dart';
+import 'bloc/manage_bloc.dart';
+import 'bloc/monitor_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,44 +39,44 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  bool _isEntry = false;
-
-  void handleIsEntry(bool inValue) {
-    setState(() {
-      _isEntry = inValue;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(children: [
-          const Icon(Icons.wallet),
-          Text(widget.title),
-        ]),
-        bottom: const TabBar(tabs: [
-          Tab(icon: Icon(Icons.home)),
-          Tab(icon: Icon(Icons.compare_arrows)),
-          Tab(icon: Icon(Icons.monetization_on))
-        ]),
-      ),
-      body: const TabBarView(children: [
-        HomeScreen(),
-        OperationsScreen(),
-        PricesScreen(),
-      ]),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () { 
-          showModalBottomSheet(context: context, builder: (BuildContext context) {
-            return NewOperation();
-          });
-        },
-        hoverColor: Colors.white,
-        backgroundColor: Colors.white10,
-        child: const Icon(Icons.add, color: Colors.lightBlue,),
-      ),
-    );
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => ManageBloc()),
+        BlocProvider(create: (_) => MonitorBloc()),
+      ],
+      child: Builder(
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: Row(children: [
+              const Icon(Icons.wallet),
+              Text(widget.title),
+            ]),
+            bottom: const TabBar(tabs: [
+              Tab(icon: Icon(Icons.home)),
+              Tab(icon: Icon(Icons.compare_arrows)),
+              Tab(icon: Icon(Icons.monetization_on))
+            ]),
+          ),
+          body: const TabBarView(
+              children: [
+                HomeScreen(),
+                OperationsView(),
+                PricesScreen(),
+              ]),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              showModalBottomSheet(context: context, builder: (BuildContext context) {
+                return NewOperation();
+              });
+            },
+            hoverColor: Colors.white,
+            backgroundColor: Colors.white10,
+            child: const Icon(Icons.add, color: Colors.lightBlue,),
+          ),
+        ),
+      ));
   }
 }
