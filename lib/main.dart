@@ -68,9 +68,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ]),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              showModalBottomSheet(context: context, builder: (BuildContext context) {
-                return NewOperation();
-              });
+              showModalBottomSheet(
+                  context: context,
+                  builder: (modalContext) => BlocProvider.value(
+                    value: BlocProvider.of<ManageBloc>(context),
+                    child: NewOperation(),
+                  ));
             },
             hoverColor: Colors.white,
             backgroundColor: Colors.white10,
