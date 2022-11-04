@@ -49,10 +49,9 @@ class Operation {
   }
 
   Operation.fromMap(map) {
-    _amount = map["amount"].toDouble();
+    _amount = map["amount"];
     _description = map["description"];
-    // _isEntry = map["isEntry"];
-    _isEntry = true;
+    _isEntry = map["isEntry"] == 0;
     _date = map["date"];
   }
 
@@ -60,10 +59,9 @@ class Operation {
     var map = <String, dynamic>{};
     map["amount"] = _amount;
     map["description"] = _description;
-    map["isEntry"] = _isEntry ? 1 : 0;
+    map["isEntry"] = _isEntry ? 0 : 1;
     map["date"] = _date;
     return map;
   }
-  
-  
+
 }

@@ -16,6 +16,7 @@ class ManageBloc extends Bloc<ManageEvent, ManageState> {
       if (state is InsertState) {
         LocalDatabase.helper.insertOperation(event.operation);
       }
+      emit(InsertState());
     });
     on<DeleteEvent>((event, emit) {
     });

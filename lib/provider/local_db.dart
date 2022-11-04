@@ -19,7 +19,7 @@ class LocalDatabase {
   }
 
   String operationTable = "operation_table";
-  String colId = "id"; // Auto-numerar
+  String colId = "id";
   String colAmount = "amount";
   String colDescription = "description";
   String colIsEntry = "isEntry";
@@ -29,10 +29,10 @@ class LocalDatabase {
     db.execute("""
        CREATE TABLE $operationTable (
            $colId INTEGER PRIMARY KEY AUTOINCREMENT,
-           $colAmount NUMERIC,
+           $colAmount NUM,
            $colDescription TEXT,
            $colDate TEXT,
-           $colIsEntry NUMERIC
+           $colIsEntry INT
           );
     """);
   }
