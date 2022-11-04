@@ -32,7 +32,7 @@ class LocalDatabase {
            $colAmount NUMERIC,
            $colDescription TEXT,
            $colDate TEXT,
-           $colIsEntry boolean
+           $colIsEntry NUMERIC
           );
     """);
   }

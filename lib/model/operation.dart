@@ -1,10 +1,10 @@
 import 'package:intl/intl.dart';
 
 class Operation {
-  late String _description;
-  late bool _isEntry;
-  late String _date;
-  late double _amount;
+  String _description = "";
+  bool _isEntry = true;
+  String _date = "";
+  double _amount = 0.0;
 
   String get description => _description;
   bool get isEntry => _isEntry;
@@ -32,7 +32,7 @@ class Operation {
   }
 
   var now = DateTime.now();
-  var formatter = new DateFormat('yyyy-MM-dd');
+  var formatter = DateFormat('yyyy-MM-dd');
 
   Operation() {
     _amount = 0.0;
@@ -49,9 +49,10 @@ class Operation {
   }
 
   Operation.fromMap(map) {
-    _amount = map["amount"];
+    _amount = map["amount"].toDouble();
     _description = map["description"];
-    _isEntry = map["isEntry"];
+    // _isEntry = map["isEntry"];
+    _isEntry = true;
     _date = map["date"];
   }
 
@@ -59,7 +60,7 @@ class Operation {
     var map = <String, dynamic>{};
     map["amount"] = _amount;
     map["description"] = _description;
-    map["isEntry"] = _isEntry;
+    map["isEntry"] = _isEntry ? 1 : 0;
     map["date"] = _date;
     return map;
   }

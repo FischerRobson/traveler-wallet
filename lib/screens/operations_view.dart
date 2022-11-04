@@ -1,34 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_example/components/operation_container.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_example/model/operations.dart';
+import '../bloc/manage_bloc.dart';
 
-class OperationsView extends StatefulWidget {
-  const OperationsView({super.key});
+import '../model/operation.dart';
+
+import '../bloc/monitor_bloc.dart';
+
+class OperationsView extends StatelessWidget {
+  OperationsView({Key? key}): super(key: key);
 
   @override
-  State<OperationsView> createState() => _OperationsViewState();
-}
+  Widget build(BuildContext buildContext){
+    return BlocBuilder<MonitorBloc, MonitorState>(
+      builder: (context, state) => getOperationListView(state.operationsCollection),
+    );
+  }
 
-class _OperationsViewState extends State<OperationsView> {
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(8),
-      children: const <Widget>[
-        OperationContainer(amount: 50.0, description: "Conta de Agua", isEntry: false, date: "04/10/22"),
-        OperationContainer(amount: 40.0, description: "Freela", isEntry: true, date: "14/10/22"),
-        OperationContainer(amount: 85.0, description: "Conta de Luz", isEntry: false, date: "13/10/22"),
-        OperationContainer(amount: 59.6, description: "Viagem", isEntry: true, date: "24/10/22"),
-        OperationContainer(amount: 14.0, description: "Conta de Agua", isEntry: false, date: "24/10/22"),
-        OperationContainer(amount: 450.0, description: "Conta de Agua", isEntry: false, date: "14/10/22"),
-        OperationContainer(amount: 8000.0, description: "Pagamento", isEntry: true, date: "08/10/22"),
-        OperationContainer(amount: 124.0, description: "Conta de Agua", isEntry: false, date: "08/10/22"),
-        OperationContainer(amount: 1122.0, description: "Conta de Agua", isEntry: false, date: "09/10/22"),
-        OperationContainer(amount: 900.0, description: "Conta de Agua", isEntry: true, date: "04/10/22"),
-        OperationContainer(amount: 5.0, description: "Conta de Agua", isEntry: true, date: "04/10/22"),
-        OperationContainer(amount: 5.0, description: "Conta de Agua", isEntry: false, date: "04/10/22"),
-      ],
+  ListView getOperationListView(OperationsCollection operationsCollection){
+    return ListView.builder(
+      padding: const EdgeInsets.all(10),
+      itemCount: operationsCollection.length(),
+      itemBuilder: (context, position) => OperationContainer(
+          amount: operationsCollection.getOperationAtIndex(position).amount,
+          description: operationsCollection.getOperationAtIndex(position).description,
+          isEntry: operationsCollection.getOperationAtIndex(position).isEntry,
+          date: operationsCollection.getOperationAtIndex(position).date),
     );
   }
 }

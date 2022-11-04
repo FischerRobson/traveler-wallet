@@ -60,11 +60,11 @@ class _MyHomePageState extends State<MyHomePage> {
               Tab(icon: Icon(Icons.monetization_on))
             ]),
           ),
-          body: const TabBarView(
+          body: TabBarView(
               children: [
-                HomeScreen(),
+                const HomeScreen(),
                 OperationsView(),
-                PricesScreen(),
+                const PricesScreen(),
               ]),
           floatingActionButton: FloatingActionButton(
             onPressed: () {

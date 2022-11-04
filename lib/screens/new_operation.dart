@@ -49,6 +49,9 @@ class _NewOperationState extends State<NewOperation> {
                     }
                     return null;
                   },
+                  onSaved: (value) {
+                    operation.amount = double.parse(value!);
+                  },
                   decoration: const InputDecoration(
                     hintText: "00.0",
                     labelText: "Valor da Operação",
@@ -64,6 +67,9 @@ class _NewOperationState extends State<NewOperation> {
                     }
                     return null;
                   },
+                  onSaved: (value) {
+                    operation.description = value!;
+                  },
                   decoration: const InputDecoration(
                     hintText: "Conta de luz",
                     labelText: "Descrição",
@@ -71,9 +77,12 @@ class _NewOperationState extends State<NewOperation> {
                 ),
                 Row(children: [
                   const Text("Entrada"),
-                  Switch(value: _isEntry, onChanged: (bool inValue) {
-                   // handleIsEntry(inValue);
-                  }),
+                  Switch(
+                      value: _isEntry,
+                      onChanged: (bool inValue) {
+                        handleIsEntry(inValue);
+                      },
+                  ),
                   const Text("Saída"),
                 ]),
                 ElevatedButton(onPressed: () {
