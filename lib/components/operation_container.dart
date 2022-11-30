@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class OperationContainer extends StatelessWidget {
-  final double amount;
+  final int amount;
   final String description;
   final bool isEntry;
   final String date;

@@ -43,14 +43,14 @@ class _NewOperationState extends State<NewOperation> {
                       decimal: true),
                   validator: (String? inValue) {
                     if (inValue != null) {
-                      if (double.parse(inValue) <= 0.0) {
+                      if (int.parse(inValue) <= 0) {
                         return "Valor inválido!";
                       }
                     }
                     return null;
                   },
                   onSaved: (value) {
-                    operation.amount = double.parse(value!);
+                    operation.amount = int.parse(value!);
                   },
                   decoration: const InputDecoration(
                     hintText: "00.0",
@@ -87,6 +87,7 @@ class _NewOperationState extends State<NewOperation> {
                 ]),
                 ElevatedButton(onPressed: () {
                   if (_formKey.currentState!.validate()) {
+                    operation.isEntry = !_isEntry;
                     _formKey.currentState!.save();
                     BlocProvider.of<ManageBloc>(context).add(SubmitEvent(operation: operation));
 

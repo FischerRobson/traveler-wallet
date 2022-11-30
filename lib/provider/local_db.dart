@@ -29,7 +29,7 @@ class LocalDatabase {
     db.execute("""
        CREATE TABLE $operationTable (
            $colId INTEGER PRIMARY KEY AUTOINCREMENT,
-           $colAmount NUM,
+           $colAmount INT,
            $colDescription TEXT,
            $colDate TEXT,
            $colIsEntry INT
@@ -39,7 +39,7 @@ class LocalDatabase {
 
   Future<Database> initializeDatabase() async {
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = "${directory.path}operations.db";
+    String path = "${directory.path}operationsv3.db";
     return openDatabase(path, version: 1, onCreate: _createDb);
   }
 
@@ -53,7 +53,7 @@ class LocalDatabase {
   Future<OperationsCollection> getOperationList() async {
     Database db = await database;
     List<Map<String, Object?>> operationMapList =
-    await db.rawQuery("SELECT * FROM $operationTable;");
+    await db.rawQuery("SELECT * FROM $operationTable ORDER BY $colId DESC;");
     OperationsCollection operationsCollection = OperationsCollection();
 
     for (int i = 0; i < operationMapList.length; i++) {

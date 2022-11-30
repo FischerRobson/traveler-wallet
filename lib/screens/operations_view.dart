@@ -16,6 +16,10 @@ class OperationsView extends StatelessWidget {
   }
 
   ListView getOperationListView(OperationsCollection operationsCollection){
+    if(operationsCollection.length() > 0) {
+      print(operationsCollection.getOperationAtIndex(0).amount);
+      print(operationsCollection.getOperationAtIndex(0).description);
+    }
     return ListView.builder(
       padding: const EdgeInsets.all(10),
       itemCount: operationsCollection.length(),

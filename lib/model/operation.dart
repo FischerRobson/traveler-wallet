@@ -4,12 +4,12 @@ class Operation {
   String _description = "";
   bool _isEntry = true;
   String _date = "";
-  double _amount = 0.0;
+  int _amount = 0;
 
   String get description => _description;
   bool get isEntry => _isEntry;
   String get date => _date;
-  double get amount => _amount;
+  int get amount => _amount;
 
   set description(String description) {
     if(description.isNotEmpty) {
@@ -23,7 +23,7 @@ class Operation {
     }
   }
 
-  set amount(double amount) {
+  set amount(int amount) {
     _amount = amount;
   }
 
@@ -32,26 +32,27 @@ class Operation {
   }
 
   var now = DateTime.now();
-  var formatter = DateFormat('yyyy-MM-dd');
+  var formatter = DateFormat('dd/MM/yyyy');
 
   Operation() {
-    _amount = 0.0;
+    _amount = 0;
     _description = "";
     _isEntry = false;
     _date = formatter.format(now);
   }
 
-  Operation.withData({amount = 0.0, description = "", isEntry = false, date = ""}) {
-    _amount = _amount;
+  Operation.withData({amount = 0, description = "", isEntry = false, date = ""}) {
+    _amount = amount;
     _description = description;
     _isEntry = isEntry;
     _date = date;
   }
 
   Operation.fromMap(map) {
+    print(map);
     _amount = map["amount"];
     _description = map["description"];
-    _isEntry = map["isEntry"] == 0;
+    _isEntry = map["isEntry"] == 1;
     _date = map["date"];
   }
 
@@ -59,8 +60,9 @@ class Operation {
     var map = <String, dynamic>{};
     map["amount"] = _amount;
     map["description"] = _description;
-    map["isEntry"] = _isEntry ? 0 : 1;
+    map["isEntry"] = _isEntry ? 1 : 0;
     map["date"] = _date;
+    print(map);
     return map;
   }
 
