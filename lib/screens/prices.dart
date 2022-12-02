@@ -24,7 +24,7 @@ class _PricesScreenState extends State<PricesScreen> {
     String baseUrl = "https://economia.awesomeapi.com.br/last/USD-BRL";
 
     Response response = await dio.get(baseUrl);
-    apidata = response["USDBRL"];
+    apidata = response.data["USDBRL"];
     print(response);
 
     if(response.statusCode == 200){
@@ -54,7 +54,7 @@ class _PricesScreenState extends State<PricesScreen> {
         Container(
             child:error?Text("Error: $errmsg"):
             Column(
-              children:apidata["data"].map<Widget>((coin){
+              children:apidata.map<Widget>((coin){
                 return CurrencyContainer(
                     name: coin["name"],
                     increase: coin["varBid"],
